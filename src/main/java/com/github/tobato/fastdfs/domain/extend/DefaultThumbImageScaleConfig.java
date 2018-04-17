@@ -12,10 +12,9 @@ import org.springframework.stereotype.Component;
 import com.github.tobato.fastdfs.FdfsClientConstants;
 
 @Component
-@ConfigurationProperties(prefix = "fdfs.thumbImageScale")
+@ConfigurationProperties(prefix = "fdfs.thumb-image-scale")
 public class DefaultThumbImageScaleConfig implements ThumbImageScaleConfig {
 
-	private int uploadOriginalImage=1;
 	
 	private List<String> thumbScaleList = new ArrayList<String>();
 	 
@@ -74,7 +73,7 @@ public class DefaultThumbImageScaleConfig implements ThumbImageScaleConfig {
 	}//end function
 
 	@Override
-	public List<ThumbSizeInfo> getThumbSizes() {
+	public List<ThumbSizeInfo> getThumbScaleSizes() {
 		// TODO Auto-generated method stub
 		if(this.thumbSizes.size()==0&&this.thumbSizeList.size()>0)
 		{
@@ -98,14 +97,4 @@ public class DefaultThumbImageScaleConfig implements ThumbImageScaleConfig {
 		}
 		return thumbSizes;
 	}
-	@Override
-	public int getUploadOriginalImage() {
-		return uploadOriginalImage;
-	}
-
-	public void setUploadOriginalImage(int uploadOriginalImage) {
-		this.uploadOriginalImage = uploadOriginalImage;
-	}
-	
-	
 }

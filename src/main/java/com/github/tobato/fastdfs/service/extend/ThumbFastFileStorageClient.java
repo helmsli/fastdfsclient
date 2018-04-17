@@ -19,6 +19,5 @@ public interface ThumbFastFileStorageClient extends FastFileStorageClient {
 
 	StorePath uploadAndCrtThumbImageByAuto(InputStream inputStream, long fileSize, String fileExtName,
             Set<MateData> metaDataSet);
-	
-	public StorePath uploadString(String content, String fileExtension);
+
 }

@@ -4,7 +4,7 @@
 
 	<groupId>com.github.tobato</groupId>
 	<artifactId>fastdfs-client</artifactId>
-	<version>1.25.10-lgq</version>
+	<version>1.25.11-lgq</version>
 	<packaging>jar</packaging>
 
 	<name>fastdfs-client</name>

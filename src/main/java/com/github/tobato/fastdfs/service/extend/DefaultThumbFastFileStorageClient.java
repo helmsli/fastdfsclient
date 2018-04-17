@@ -4,7 +4,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Set;
 
@@ -178,22 +177,14 @@ public class DefaultThumbFastFileStorageClient extends DefaultFastFileStorageCli
 			byte[] bytes = inputStreamToByte(inputStream);
 
 			// 上传文件和mateData
-			StorePath path = null;
-			if(thumbImageScaleConfig.getUploadOriginalImage()==1)
-			{
-				path=uploadFileAndMateData(client, new ByteArrayInputStream(bytes), fileSize, fileExtName,
+			StorePath path = uploadFileAndMateData(client, new ByteArrayInputStream(bytes), fileSize, fileExtName,
 					metaDataSet);
-			}
-			else
-			{
-				path = this.uploadString("a", fileExtName);
-			}
 			// 上传缩略图
 			for (int i = 0; i < usedthumbScaleInfos.size(); i++) {
 				uploadThumbImageScale(client, new ByteArrayInputStream(bytes), path.getPath(), fileExtName,
 						usedthumbScaleInfos.get(i));
 			}
-			List<ThumbSizeInfo> usedThumbSizeInfo  = thumbImageScaleConfig.getThumbSizes();
+			List<ThumbSizeInfo> usedThumbSizeInfo  = thumbImageScaleConfig.getThumbScaleSizes();
 			
 			for (int i = 0; i < usedThumbSizeInfo.size(); i++) {
 				uploadThumbImageSize(client, new ByteArrayInputStream(bytes), path.getPath(), fileExtName,
@@ -203,39 +194,4 @@ public class DefaultThumbFastFileStorageClient extends DefaultFastFileStorageCli
 			return path;
 
 	}
-	
-	/**
-	 * 上传字符串
-	 * @param content
-	 * @param fileExtension
-	 * @return
-	 */
-	@Override 
-	public StorePath uploadString(String content, String fileExtension) {
-	        byte[] buff = content.getBytes(Charset.forName("UTF-8"));
-	        StorePath storePath;
-	        ByteArrayInputStream stream=null;
-			try {
-				 stream = new ByteArrayInputStream(buff);
-				storePath = uploadFile(stream,buff.length, fileExtension,null);
-				return storePath;	
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			finally {
-				if(stream!=null)
-				{
-					try {
-						stream.close();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			}
-			return null;
-	        
-	    }
-
 }
